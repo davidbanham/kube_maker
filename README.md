@@ -1,0 +1,42 @@
+Kube Maker
+==========
+
+This is a makefile for deploying things to Kubernetes. With one Makefile you can create and deploy to a production or staging environment with a single command.
+
+The makefile also allows you to have a separate development environment for each of your developers on the project. It's really handy for devs to be able to get what's on their laptop onto the cloud quickly and easily so that they can share what they're working on with the rest of the team.
+
+It's got all kinds of cool features like tagging your containers by the SHA of the git commit that describes the code they're running. Want to know what version of the code is running in prod/staging/dev right now? It's right there in the tag.
+
+By default it's set up for Go projects, but it's really simple to adapt it to your language of choice.
+
+It's also set up for Google Kubernetes Engine. It's only a couple of URLs that are specific to that, though, so if you want to use a Kubernetes cluster on different hosting or your own, that should be pretty simple.
+
+## Installation
+
+I recommend you add this to your project as a git submodule. That way it's really easy to get any updates. If you're frightened of git submodules, don't be. They're easy.
+
+```
+git submodule add https://github.com/davidbanham/kube_maker
+```
+
+Now copy the example head Makefile into your project
+
+```
+cp k8s/Makefile .
+```
+
+If you don't have kubectl set up, just do [these things](https://cloud.google.com/kubernetes-engine/docs/quickstart). You can bail once you get to the "Deploying an application to the cluster" bit since you have Kube Maker for that.
+
+Now edit the configuration section at the top of that makefile to add your details. You get "project" from GKE and the name an prefix you just make up.
+
+Just `make development` and your thing will be on the internet.
+
+Simples!
+
+## Extension
+
+Kube Maker is really simple. It's just a makefile. Please, please customise it to your individual needs. That's the beauty of installing it as a submodule. You can do your own weird and wonderful things to it and you still have a good way of merging in upstream changes.
+
+Even if you don't want to customise it, please read all of it. The whole thing is like 180 lines. It'll take you 10 minutes and then you'll get it. Do it now.
+
+If you come up with super cool things, please submit a PR! I'd love to check them out.

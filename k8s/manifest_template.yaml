@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: __STAGE__
+  labels:
+    name: __STAGE__
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    run: __NAME__
+  name: __NAME__
+  namespace: __STAGE__
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: __NAME__
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: __NAME__
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+        - image: gcr.io/__PROJECT__/__IMAGE__:__HASH_TAG__
+          imagePullPolicy: __PULL_POLICY__
+          env:
+            - name: PORT
+              value: "3000"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/google_credentials.json
+            - name: ENVIRONMENT
+              value: STAGE
+          name: __NAME__
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /etc/ssl/certs
+            name: ca-certificates
+          - name: creds
+            mountPath: /var/secrets/google
+      volumes:
+        - name: ca-certificates
+          hostPath:
+            path: /etc/ssl/certs
+        - name: creds
+          secret:
+            secretName: google-credentials
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: __NAME__
+  namespace: __STAGE__
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    run: __NAME__
+  type: LoadBalancer
