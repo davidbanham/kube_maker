@@ -19,10 +19,16 @@ I recommend you add this to your project as a git submodule. That way it's reall
 git submodule add https://github.com/davidbanham/kube_maker
 ```
 
-Now copy the example head Makefile into your project
+Now copy the example head Makefile and the environment files into your project.
 
 ```
-cp k8s/Makefile .
+cp k8s/Makefile *.env .
+```
+
+If you don't already, add the env files to your gitignore:
+
+```
+echo "*.env" >> .gitignore
 ```
 
 If you don't have kubectl set up, just do [these things](https://cloud.google.com/kubernetes-engine/docs/quickstart). You can bail once you get to the "Deploying an application to the cluster" bit since you have Kube Maker for that.
@@ -32,6 +38,20 @@ Now edit the configuration section at the top of that makefile to add your detai
 Just `make development` and your thing will be on the internet.
 
 Simples!
+
+## Secrets
+
+The secrets makefile gives you a way to store all your sensitive information in your git repository, but have them protected by public key encryption. The process is made simple with Keybase. If you want to use this feature, [install keybase](https://keybase.io/)
+
+Then you can encrypt your env files with:
+
+```
+make production.env.encrypted
+```
+
+And bam! Anyone in the keybase team can decrypt the file, but anybody that just compromises the repo can't access them. Pretty neat!
+
+If you're not working on the project with a team, just put your username in `keybase_team` and it'll work like a champ.
 
 ## Extension
 

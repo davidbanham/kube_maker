@@ -30,27 +30,9 @@ demand_clean:
 	$(eval pull_policy=IfNotPresent)
 	$(eval tag=`git rev-parse HEAD`)
 
-prod.env:
-	keybase decrypt < encrypted.prod.env > prod.env
-
-staging.env:
-	keybase decrypt < encrypted.staging.env > staging.env
-
-development.env:
-	keybase decrypt < encrypted.development.env > development.env
-
-encrypted.prod.env:
-	keybase encrypt davidbanham > prod.env < encrypted.prod.env
-
-encrypted.staging.env:
-	keybase encrypt davidbanham > staging.env < encrypted.staging.env
-
-encrypted.development.env:
-	keybase encrypt davidbanham > development.env < encrypted.development.env
-
 env_secret: stage_staging stage_production stage_development
 	cat development.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)development &
-	cat prod.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)production &
+	cat production.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)production &
 	cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)staging &
 
 stage_production:
