@@ -1,4 +1,4 @@
 .PHONY: areyousure
 
 areyousure:
-	./makefiles/areyousure.sh
+	./kube_maker/makefiles/areyousure.sh
