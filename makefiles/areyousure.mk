@@ -1,4 +1,4 @@
-.PHONY areyousure
+.PHONY: areyousure
 
 areyousure:
 	./makefiles/areyousure.sh

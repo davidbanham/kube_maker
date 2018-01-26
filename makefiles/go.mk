@@ -1,4 +1,4 @@
-.PHONY build lint run vet test check
+.PHONY: build lint run vet test check
 
 build:
 	CGO_ENABLED=0 go build -o ./bin/$(name) -a -installsuffix cgo -ldflags '-s' .

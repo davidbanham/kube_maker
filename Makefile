@@ -1,4 +1,4 @@
-.PHONY production staging deveopment
+.PHONY: production staging deveopment
 
 include ./kube_maker/makefiles/*.mk
 
