@@ -22,7 +22,7 @@ git submodule add https://github.com/davidbanham/kube_maker
 Now copy the example head Makefile and the environment files into your project.
 
 ```
-cp k8s/Makefile *.env .
+cp k8s/Makefile k8s/manifest_template.yaml *.env .
 ```
 
 If you don't already, add the env files to your gitignore:
