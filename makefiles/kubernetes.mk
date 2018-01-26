@@ -17,7 +17,7 @@ kube_deploy:
 
 get_exposed_ip:
 	@echo "Deployment available at:"
-	@kubectl get service api -o json --namespace $(prefix)$(stage)| jq ".status.loadBalancer.ingress[].ip" | sed s/\"//g
+	@kubectl get service $(name) -o json --namespace $(prefix)$(stage)| jq ".status.loadBalancer.ingress[].ip" | sed s/\"//g
 
 teardown_staging: areyousure
 	kubectl delete namespace $(prefix)staging
