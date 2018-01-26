@@ -50,15 +50,10 @@ spec:
           volumeMounts:
           - mountPath: /etc/ssl/certs
             name: ca-certificates
-          - name: creds
-            mountPath: /var/secrets/google
       volumes:
         - name: ca-certificates
           hostPath:
             path: /etc/ssl/certs
-        - name: creds
-          secret:
-            secretName: google-credentials
 ---
 apiVersion: v1
 kind: Service
