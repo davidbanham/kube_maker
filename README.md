@@ -55,6 +55,8 @@ If you're not working on the project with a team, just put your username in `key
 
 ## Extension
 
+Remember that anything you define in your head Makefile overrides anything in an included makefile. So if your project is something other than go, or you want a different test or build step, just write your own `check` and `build` tasks in the head Makefile and the tasks in `go.mk` will get ignored.
+
 Kube Maker is really simple. It's just a makefile. Please, please customise it to your individual needs. That's the beauty of installing it as a submodule. You can do your own weird and wonderful things to it and you still have a good way of merging in upstream changes. Just hit that little fork button up there.
 
 Even if you don't want to customise it, please read all of it. The whole thing is like 180 lines. It'll take you 10 minutes and then you'll get it. Do it now.
