@@ -16,3 +16,6 @@ tag = `whoami`-dev-$(uniq)
 production: $(eval stage=production) check build demand_clean areyousure k8s_deploy
 staging: $(eval stage=staging) check build demand_clean k8s_deploy
 development: $(eval stage=development) check build k8s_deploy
+
+submodules:
+	git submodule update --init --recursive
