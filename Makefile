@@ -5,7 +5,7 @@ include ./kube_maker/makefiles/*.mk
 # Config
 name = boilerplate
 prefix = catchall-
-project = somproject-000000
+project = someproject-000000
 keybase_team = davidbanham
 
 stage = dummy
