@@ -1,6 +1,6 @@
-.PHONY: k8s_deploy docker_image_build build_manifest registry_push kube_deploy get_exposed_ip teardown_staging teardown_development demand_clean env_secret stage_production stage_development stage_staging
+.PHONY: k8s_deploy docker_image_build build_manifest registry_push kube_deploy get_exposed_ip teardown_staging teardown_development demand_clean env_secret
 
-k8s_deploy: ca-certificates.crt env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
+k8s_deploy: ca-certificates.crt env_secret docker_image_build registry_push build_manifest create_namespace kube_deploy get_exposed_ip
 
 docker_image_build:
 	docker build --tag $(name) .
@@ -30,22 +30,13 @@ demand_clean:
 	$(eval pull_policy=IfNotPresent)
 	$(eval tag=`git rev-parse HEAD`)
 
-env_secret: stage_staging stage_production stage_development
-	cat development.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)development &
-	cat production.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)production &
-	cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)staging &
+env_secret:
+	cat development.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)development || true
+	cat production.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)production || true
+	cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)staging || true
 
-stage_production:
-	kubectl create namespace $(prefix)production &
-	$(eval stage=production)
-
-stage_staging:
-	kubectl create namespace $(prefix)staging &
-	$(eval stage=staging)
-
-stage_development:
-	kubectl create namespace $(prefix)development &
-	$(eval stage=development)
+create_namespace:
+	kubectl create namespace $(prefix)$(stage)
 
 ca-certificates.crt:
 	cp /etc/ssl/certs/ca-certificates.crt .

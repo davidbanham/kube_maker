@@ -13,6 +13,6 @@ pull_policy = Always
 uniq:=$(shell uuid)
 tag = `whoami`-dev-$(uniq)
 
-production: check build demand_clean areyousure stage_production k8s_deploy
-staging: check build demand_clean stage_staging k8s_deploy
-development: check build stage_development k8s_deploy
+production: $(eval stage=production) check build demand_clean areyousure k8s_deploy
+staging: $(eval stage=staging) check build demand_clean k8s_deploy
+development: $(eval stage=development) check build k8s_deploy
