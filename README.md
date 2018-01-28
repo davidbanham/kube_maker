@@ -19,13 +19,13 @@ I recommend you add this to your project as a git submodule. That way it's reall
 git submodule add https://github.com/davidbanham/kube_maker
 ```
 
-Now copy the example head Makefile and the environment files into your project.
+Now copy the example head Makefile, environment files and manifest files into your project. These are the bits you'll customise the most, so you want them to be part of your git repo.
 
 ```
 cp k8s/Makefile k8s/manifest_template.yaml *.env .
 ```
 
-If you don't already, add the env files to your gitignore:
+If you haven't already, add the env files to your gitignore:
 
 ```
 echo "*.env" >> .gitignore
@@ -55,7 +55,7 @@ If you're not working on the project with a team, just put your username in `key
 
 ## Extension
 
-Kube Maker is really simple. It's just a makefile. Please, please customise it to your individual needs. That's the beauty of installing it as a submodule. You can do your own weird and wonderful things to it and you still have a good way of merging in upstream changes.
+Kube Maker is really simple. It's just a makefile. Please, please customise it to your individual needs. That's the beauty of installing it as a submodule. You can do your own weird and wonderful things to it and you still have a good way of merging in upstream changes. Just hit that little fork button up there.
 
 Even if you don't want to customise it, please read all of it. The whole thing is like 180 lines. It'll take you 10 minutes and then you'll get it. Do it now.
 
