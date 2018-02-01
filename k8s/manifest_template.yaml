@@ -30,8 +30,6 @@ spec:
           env:
             - name: PORT
               value: "3000"
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /var/secrets/google/google_credentials.json
             - name: ENVIRONMENT
               value: STAGE
           name: __NAME__
