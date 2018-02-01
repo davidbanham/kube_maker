@@ -36,7 +36,7 @@ env_secret:
 	cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)staging || true
 
 create_namespace:
-	kubectl create namespace $(prefix)$(stage)
+	-kubectl create namespace $(prefix)$(stage)
 
 ca-certificates.crt:
 	cp /etc/ssl/certs/ca-certificates.crt .
