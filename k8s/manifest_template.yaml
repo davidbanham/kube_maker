@@ -31,7 +31,7 @@ spec:
             - name: PORT
               value: "3000"
             - name: ENVIRONMENT
-              value: STAGE
+              value: __STAGE__
           name: __NAME__
           livenessProbe:
             httpGet:
