@@ -13,9 +13,9 @@ pull_policy = Always
 uniq:=$(shell uuid)
 tag = `whoami`-dev-$(uniq)
 
-production: $(eval stage=production) check build demand_clean areyousure k8s_deploy
-staging: $(eval stage=staging) check build demand_clean k8s_deploy
-development: $(eval stage=development) check build k8s_deploy
+production: stage_production check build demand_clean areyousure k8s_deploy
+staging: stage_staging check build demand_clean k8s_deploy
+development: stage_development check build k8s_deploy
 
 submodules:
 	git submodule update --init --recursive
