@@ -1,3 +1,16 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: __NAME__-scaler
+  namespace: __STAGE__
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: __NAME__
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -8,7 +21,6 @@ metadata:
   name: __NAME__
   namespace: __STAGE__
 spec:
-  replicas: 2
   selector:
     matchLabels:
       run: __NAME__
