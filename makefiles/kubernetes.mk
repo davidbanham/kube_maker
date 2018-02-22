@@ -31,9 +31,9 @@ demand_clean:
 	$(eval tag=`git rev-parse HEAD`)
 
 env_secret:
-	-cat development.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)development
-	-cat production.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)production
-	-cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --namespace $(prefix)staging
+	-cat development.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --dry-run -o yaml | kubectl apply --namespace takehome-development -f -
+	-cat production.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --dry-run -o yaml | kubectl apply --namespace takehome-production -f -
+	-cat staging.env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --dry-run -o yaml | kubectl apply --namespace takehome-staging -f -
 
 create_namespace:
 	-kubectl create namespace $(prefix)$(stage)
