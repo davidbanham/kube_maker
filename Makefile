@@ -6,7 +6,7 @@ include ./kube_maker/makefiles/*.mk
 name = boilerplate
 prefix = catchall-
 project = someproject-000000
-keybase_team = davidbanham
+keybase_team = notbad.example
 
 stage = dummy
 pull_policy = Always
