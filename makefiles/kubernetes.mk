@@ -1,6 +1,6 @@
 .PHONY: k8s_deploy docker_image_build build_manifest registry_push kube_deploy get_exposed_ip teardown_staging teardown_development demand_clean env_secret
 
-k8s_deploy: ca-certificates.crt create_namespace env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
+k8s_deploy: create_namespace env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
 
 docker_image_build:
 	docker build --tag $(name) .
@@ -37,6 +37,3 @@ env_secret:
 
 create_namespace:
 	-kubectl create namespace $(prefix)$(stage)
-
-ca-certificates.crt:
-	cp /etc/ssl/certs/ca-certificates.crt .
