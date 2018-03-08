@@ -9,6 +9,8 @@ staging.env:
 development.env:
 	keybase decrypt < development.env.encrypted > development.env
 
+encrypted_secrets: production.env.encrypted staging.env.encrypted development.env.encrypted
+
 production.env.encrypted:
 	keybase encrypt $(keybase_users) < production.env > production.env.encrypted
 
