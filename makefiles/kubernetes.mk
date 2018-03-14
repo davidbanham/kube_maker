@@ -2,7 +2,7 @@
 
 stage = dummy
 pull_policy = Always
-uniq:=$(shell uuid)
+uniq:=$(shell uuidgen)
 tag = $(shell whoami)-dev-$(uniq)
 
 k8s_deploy: create_namespace env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
