@@ -26,7 +26,12 @@ teardown_development: areyousure
 	kubectl delete namespace $(prefix)development
 
 demand_clean:
+	@# Check there are no forbidden extensions not tracked by git
+	git ls-files --others --exclude-standard | grep -E $(forbidden_untracked_extensions) | xargs -n 1 test -z
+	@# Check that there are no local modifications
 	git diff-index --quiet HEAD -- && test -z "$(git ls-files --exclude-standard --others)"
+	@# Check that we are up to date with remotes
+	./kube_maker/makefiles/gitup.sh
 	$(eval pull_policy=IfNotPresent)
 	$(eval tag=`git rev-parse HEAD`)
 

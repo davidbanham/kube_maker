@@ -7,6 +7,7 @@ name = boilerplate
 prefix = catchall-
 project = someproject-000000
 keybase_team = notbad.example
+forbidden_untracked_extensions = '\.go|\.js'
 
 stage = dummy
 pull_policy = Always
