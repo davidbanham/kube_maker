@@ -44,6 +44,8 @@ spec:
               value: "3000"
             - name: ENVIRONMENT
               value: __STAGE__
+            - name: STAGE
+              value: __STAGE__
           name: __NAME__
           livenessProbe:
             httpGet:
