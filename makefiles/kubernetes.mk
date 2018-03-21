@@ -45,7 +45,7 @@ demand_clean:
 	@# Check that we are up to date with remotes
 	./kube_maker/makefiles/gitup.sh
 	$(eval pull_policy=IfNotPresent)
-	$(eval tag=`git rev-parse HEAD`)
+	$(eval tag=$(shell git rev-parse HEAD))
 
 .PHONY: env_secret
 env_secret:
