@@ -4,7 +4,7 @@ uniq:=$(shell uuidgen)
 tag = $(shell whoami)-dev-$(uniq)
 
 .PHONY: k8s_deploy
-k8s_deploy: secrets create_namespace env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
+k8s_deploy: create_namespace env_secret docker_image_build registry_push build_manifest kube_deploy get_exposed_ip
 
 .PHONY: docker_image_build
 docker_image_build:
@@ -48,8 +48,9 @@ demand_clean:
 	$(eval tag=$(shell git rev-parse HEAD))
 
 .PHONY: env_secret
+secret_contents ?= $(shell keybase decrypt < $(stage).env.encrypted)
 env_secret:
-	-cat $(stage).env | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --dry-run -o yaml | kubectl apply --namespace $(prefix)$(stage) -f -
+	-echo "$(secret_contents)" | xargs printf -- '--from-literal=%s ' | xargs kubectl create secret generic env --dry-run -o yaml | kubectl apply --namespace $(prefix)$(stage) -f -
 
 .PHONY: create_namespace
 create_namespace:
