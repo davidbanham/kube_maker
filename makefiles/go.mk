@@ -20,3 +20,6 @@ check: test vet lint
 
 test:
 	go test -cover `go list ./... | grep -v /vendor/`
+
+cyclo:
+	ls | grep -v vendor | xargs -n 1 gocyclo -over 10 2> /dev/null | sort
