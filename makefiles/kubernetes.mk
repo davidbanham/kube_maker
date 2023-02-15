@@ -15,9 +15,13 @@ docker_image_build:
 build_manifest:
 	cat ./manifest_template.yaml | sed s/__PULL_POLICY__/$(pull_policy)/g | sed s/__NAMESPACE__/$(prefix)$(stage)/g | sed s/__STAGE__/$(stage)/g | sed s/__IMAGE__/$(prefix)$(name)/g | sed s/__NAME__/$(name)/g | sed s/__PROJECT__/$(project)/g | sed s/__HASH_TAG__/$(tag)/ > ./manifest.yaml
 
+local_dev/gcloud_docker_auth_configured: ${GOOGLE_APPLICATION_CREDENTIALS}
+	gcloud auth configure-docker
+	touch local_dev/gcloud_docker_auth_configured
+
 .PHONY: registry_push
-registry_push:
-	gcloud docker -- push gcr.io/$(project)/$(prefix)$(name):$(tag)
+registry_push: local_dev/gcloud_docker_auth_configured
+	docker push gcr.io/$(project)/$(prefix)$(name):$(tag)
 
 .PHONY: kube_deploy
 kube_deploy:
